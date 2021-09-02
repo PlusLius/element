@@ -1,5 +1,91 @@
 // timePicker datePicker dateTimePicker共享picker组件的props
 
+    // var formatFlags = {
+    //   D: function(dateObj) {  // 星期中的第几天（0-6）
+    //     return dateObj.getDay();
+    //   },
+    //   DD: function(dateObj) {  // 星期中的第几天（0-6）
+    //     return pad(dateObj.getDay());
+    //   },
+    //   Do: function(dateObj, i18n) {  // 月份中的第几天（1st-31st），加上后缀
+    //     return i18n.DoFn(dateObj.getDate());
+    //   },
+    //   d: function(dateObj) {  // 月份中的第几天（1-31）
+    //     return dateObj.getDate();
+    //   },
+    //   dd: function(dateObj) {  // 月份中的第几天（01-31）
+    //     return pad(dateObj.getDate());
+    //   },
+    //   ddd: function(dateObj, i18n) {  // 星期中的第几天（Sun-Sat）
+    //     return i18n.dayNamesShort[dateObj.getDay()];
+    //   },
+    //   dddd: function(dateObj, i18n) {  // 星期中的第几天（Sunday-Saturday）
+    //     return i18n.dayNames[dateObj.getDay()];
+    //   },
+    //   M: function(dateObj) {  // 月份（1-12）
+    //     return dateObj.getMonth() + 1;
+    //   },
+    //   MM: function(dateObj) {  // 月份（01-12）
+    //     return pad(dateObj.getMonth() + 1);
+    //   },
+    //   MMM: function(dateObj, i18n) {  // 月份（Jan-Dec）
+    //     return i18n.monthNamesShort[dateObj.getMonth()];
+    //   },
+    //   MMMM: function(dateObj, i18n) {  // 月份（January-December）
+    //     return i18n.monthNames[dateObj.getMonth()];
+    //   },
+    //   yy: function(dateObj) {  // 年份最后两位
+    //     return String(dateObj.getFullYear()).substr(2);
+    //   },
+    //   yyyy: function(dateObj) {  // 年份完整四位
+    //     return dateObj.getFullYear();
+    //   },
+    //   h: function(dateObj) {  // 12小时制的小时数（0-11）
+    //     return dateObj.getHours() % 12 || 12;
+    //   },
+    //   hh: function(dateObj) {  // 12小时制的小时数（00-11）
+    //     return pad(dateObj.getHours() % 12 || 12);
+    //   },
+    //   H: function(dateObj) {  // 24小时制的小时数（0-23）
+    //     return dateObj.getHours();
+    //   },
+    //   HH: function(dateObj) {  // 24小时制的小时数（00-23）
+    //     return pad(dateObj.getHours());
+    //   },
+    //   m: function(dateObj) {  //  分钟数（0-59）
+    //     return dateObj.getMinutes();
+    //   },
+    //   mm: function(dateObj) {  // 分钟数（00-59）
+    //     return pad(dateObj.getMinutes());
+    //   },
+    //   s: function(dateObj) {  // 秒数（0-59）
+    //     return dateObj.getSeconds();
+    //   },
+    //   ss: function(dateObj) {  // 秒数（00-59）
+    //     return pad(dateObj.getSeconds());
+    //   },
+    //   S: function(dateObj) {  // 一位毫秒数（0-9）
+    //     return Math.round(dateObj.getMilliseconds() / 100);
+    //   },
+    //   SS: function(dateObj) {  // 两位毫秒数（00-99）
+    //     return pad(Math.round(dateObj.getMilliseconds() / 10), 2);
+    //   },
+    //   SSS: function(dateObj) {  // 三位毫秒数（000-999）
+    //     return pad(dateObj.getMilliseconds(), 3);
+    //   },
+    //   a: function(dateObj, i18n) {  // 上下午（a或者p）
+    //     return dateObj.getHours() < 12 ? i18n.amPm[0] : i18n.amPm[1];
+    //   },
+    //   A: function(dateObj, i18n) {  // 上下午（A或者P）
+    //     return dateObj.getHours() < 12 ? i18n.amPm[0].toUpperCase() : i18n.amPm[1].toUpperCase();
+    //   },
+    //   ZZ: function(dateObj) {  // 时区偏移（±0000-1200）
+    //     var o = dateObj.getTimezoneOffset();
+    //     return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
+    //   }
+    // };
+  
+
 <template>
   <el-input
     class="el-date-editor"
