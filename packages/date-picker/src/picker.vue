@@ -1,3 +1,5 @@
+// timePicker datePicker dateTimePicker共享picker组件的props
+
 <template>
   <el-input
     class="el-date-editor"
