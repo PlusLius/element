@@ -222,27 +222,34 @@ const HAVE_TRIGGER_TYPES = [
   'datetimerange', // yyyy-MM-dd HH:mm:ss
   'dates'
 ];
+// 格式化日期
 const DATE_FORMATTER = function(value, format) {
+  // 如果是格式化成时间戳，直接拿Date().getTime()
   if (format === 'timestamp') return value.getTime();
+  // 否则直接调用util.formatDate
   return formatDate(value, format);
 };
+// 将日期字符串解析成对象
 const DATE_PARSER = function(text, format) {
    // 如果text是个时间戳，解析成日期对象
   if (format === 'timestamp') return new Date(Number(text));
-  // 否则继续向下解析
+  // 格式化成日期对象
   return parseDate(text, format);
 };
+// 格式化日期范围
 const RANGE_FORMATTER = function(value, format) {
   if (Array.isArray(value) && value.length === 2) {
     const start = value[0];
     const end = value[1];
 
     if (start && end) {
+        // 格式化日期范围
       return [DATE_FORMATTER(start, format), DATE_FORMATTER(end, format)];
     }
   }
   return '';
 };
+// 将日期字符串解析成对象范围处理
 const RANGE_PARSER = function(array, format, separator) {
   if (!Array.isArray(array)) {
     array = array.split(separator);
@@ -329,11 +336,7 @@ const TYPE_VALUE_RESOLVER_MAP = {
       return '' + value;
     },
     parser(text) {
-      let result = Number(text);C:\Users\Administrator\Desktop\test\ui\src\App.vue
-C:\Users\Administrator\Desktop\test\ui\src\main.js
-C:\Users\Administrator\Desktop\test\ui\date.js
-C:\Users\Administrator\Desktop\test\ui\date2.js
-C:\Users\Administrator\Desktop\test\picker.vue
+      let result = Number(text);
 
       if (!isNaN(text)) {
         return result;
@@ -489,7 +492,7 @@ export default {
 
   components: { ElInput },
 
-  directives: { Clickoutside },
+  directives: { Clickoutside }, 
 
   data() {
     return {
