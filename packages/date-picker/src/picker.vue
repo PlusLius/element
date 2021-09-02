@@ -329,7 +329,11 @@ const TYPE_VALUE_RESOLVER_MAP = {
       return '' + value;
     },
     parser(text) {
-      let result = Number(text);
+      let result = Number(text);C:\Users\Administrator\Desktop\test\ui\src\App.vue
+C:\Users\Administrator\Desktop\test\ui\src\main.js
+C:\Users\Administrator\Desktop\test\ui\date.js
+C:\Users\Administrator\Desktop\test\ui\date2.js
+C:\Users\Administrator\Desktop\test\picker.vue
 
       if (!isNaN(text)) {
         return result;
