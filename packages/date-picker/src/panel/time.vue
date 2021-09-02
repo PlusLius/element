@@ -1,3 +1,4 @@
+// panel + footer页面
 <template>
   <transition name="el-zoom-in-top" @after-leave="$emit('dodestroy')">
     <div
