@@ -141,7 +141,9 @@ const DATE_FORMATTER = function(value, format) {
   return formatDate(value, format);
 };
 const DATE_PARSER = function(text, format) {
+   // 如果text是个时间戳，解析成日期对象
   if (format === 'timestamp') return new Date(Number(text));
+  // 否则继续向下解析
   return parseDate(text, format);
 };
 const RANGE_FORMATTER = function(value, format) {
@@ -162,7 +164,7 @@ const RANGE_PARSER = function(array, format, separator) {
   if (array.length === 2) {
     const range1 = array[0];
     const range2 = array[1];
-
+    // range-pasher使用的是date-parse
     return [DATE_PARSER(range1, format), DATE_PARSER(range2, format)];
   }
   return [];
@@ -199,11 +201,11 @@ const TYPE_VALUE_RESOLVER_MAP = {
       return TYPE_VALUE_RESOLVER_MAP.date.parser(text, format);
     }
   },
-  date: {
+  date: { // date, datetime, time, month, year都使用date_parser
     formatter: DATE_FORMATTER,
     parser: DATE_PARSER
   },
-  datetime: {
+  datetime: { // date, datetime, time, month, year都使用date_parser
     formatter: DATE_FORMATTER,
     parser: DATE_PARSER
   },
@@ -223,15 +225,15 @@ const TYPE_VALUE_RESOLVER_MAP = {
     formatter: RANGE_FORMATTER,
     parser: RANGE_PARSER
   },
-  time: {
+  time: { //date, datetime, time, month, year都使用date_parser
     formatter: DATE_FORMATTER,
     parser: DATE_PARSER
   },
-  month: {
+  month: { // date, datetime, time, month, year都使用date_parser
     formatter: DATE_FORMATTER,
     parser: DATE_PARSER
   },
-  year: {
+  year: { // date, datetime, time, month, year都使用date_parser
     formatter: DATE_FORMATTER,
     parser: DATE_PARSER
   },
@@ -256,7 +258,7 @@ const TYPE_VALUE_RESOLVER_MAP = {
     },
     parser(value, format) {
       return (typeof value === 'string' ? value.split(', ') : value)
-        .map(date => date instanceof Date ? date : DATE_PARSER(date, format));
+        .map(date => date instanceof Date ? date : DATE_PARSER(date, format)); //日期默认使用的是date_parser解析
     }
   }
 };
