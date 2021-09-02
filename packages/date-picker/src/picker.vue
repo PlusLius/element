@@ -94,6 +94,7 @@ import Emitter from 'element-ui/src/mixins/emitter';
 import ElInput from 'element-ui/packages/input';
 import merge from 'element-ui/src/utils/merge';
 
+// 硬编码一个Popper组件
 const NewPopper = {
   props: {
     appendToBody: Popper.props.appendToBody,
@@ -103,35 +104,36 @@ const NewPopper = {
   },
   methods: Popper.methods,
   data() {
+    // 合并Popper到这个新的Poppper data
     return merge({ visibleArrow: true }, Popper.data);
   },
   beforeDestroy: Popper.beforeDestroy
 };
-
+// 默认的时间日期格式化 MM月 mm分钟  HH 24小时制 hh 12小时制
 const DEFAULT_FORMATS = {
-  date: 'yyyy-MM-dd',
-  month: 'yyyy-MM',
+  date: 'yyyy-MM-dd', // 月
+  month: 'yyyy-MM', // 月
   datetime: 'yyyy-MM-dd HH:mm:ss',
-  time: 'HH:mm:ss',
-  week: 'yyyywWW',
-  timerange: 'HH:mm:ss',
+  time: 'HH:mm:ss', // 24小时制
+  week: 'yyyywWW', // 周
+  timerange: 'HH:mm:ss', // 24小时制
   daterange: 'yyyy-MM-dd',
   monthrange: 'yyyy-MM',
-  datetimerange: 'yyyy-MM-dd HH:mm:ss',
-  year: 'yyyy'
+  datetimerange: 'yyyy-MM-dd HH:mm:ss', // M不补0 MM补0 d不补0 dd补0 2021-09-02 H 24小时制，不补0 HH 24小时补0
+  year: 'yyyy' // 2021
 };
 const HAVE_TRIGGER_TYPES = [
-  'date',
-  'datetime',
-  'time',
-  'time-select',
-  'week',
-  'month',
-  'year',
-  'daterange',
-  'monthrange',
-  'timerange',
-  'datetimerange',
+  'date', // -> yyyy-MM-dd
+  'datetime', // -> yyyy-MM-dd HH:mm:ss
+  'time', // -> HH:mm:ss
+  'time-select', // -> 
+  'week', // yyyywWW
+  'month', // yyyy-MM
+  'year', // yyyy
+  'daterange', // yyyy-MM-dd
+  'monthrange', // yyyy-MM
+  'timerange', // HH:mm:ss
+  'datetimerange', // yyyy-MM-dd HH:mm:ss
   'dates'
 ];
 const DATE_FORMATTER = function(value, format) {
