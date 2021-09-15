@@ -159,18 +159,22 @@
         return getPropByPath(model, path, true).v;
       },
       isRequired() {
+        // 拿到合并后的规则
         let rules = this.getRules();
         let isRequired = false;
-
+        // 检查规则
         if (rules && rules.length) {
+          // 只要规则中有一项是必填的就标记为是必填的
           rules.every(rule => {
             if (rule.required) {
+               // 找到一个规则是必填的就停止查找
               isRequired = true;
               return false;
             }
             return true;
           });
         }
+        // 返回是否是必填的
         return isRequired;
       },
       _formSize() {
@@ -268,8 +272,9 @@
         const requiredRule = this.required !== undefined ? { required: !!this.required } : [];
         // 从form-item中传入的prop 取 rules中查找对应的rule
         const prop = getPropByPath(formRules, this.prop || '');
+        // prop.o里面存放的是prop对应的规则，prop.o里面存放的是对应path层级的rules对象，如果拿到就去拿prop.v，总之是拿到对应form-item传入的Prop对应的rules校验规则
         formRules = formRules ? (prop.o[this.prop || ''] || prop.v) : [];
-
+        // 最后将form-item上的rules与form上的rules进行合并把是否必传的规则也进行合并
         return [].concat(selfRules || formRules || []).concat(requiredRule);
       },
       getFilteredRule(trigger) {
