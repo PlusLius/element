@@ -49,7 +49,7 @@
 
     componentName: 'ElFormItem',
 
-    mixins: [emitter],
+    mixins: [emitter], // 混入一个自定义的方法
 
     provide() {
       return {
@@ -147,7 +147,7 @@
         // 返回el-form组件实例
         return parent;
       },
-      fieldValue() {
+      fieldValue() { // 拿到prop对应的model数据
         const model = this.form.model;
         if (!model || !this.prop) { return; }
 
@@ -246,7 +246,7 @@
         this.validateMessage = '';
 
         let model = this.form.model;
-        let value = this.fieldValue;
+        let value = this.fieldValue; // 拿到el-form上用户传入的model,form-item传入的对应prop对应el-form上的model中相对应的数据值
         let path = this.prop;
         if (path.indexOf(':') !== -1) {
           path = path.replace(/:/, '.');
@@ -326,6 +326,7 @@
       }
     },
     mounted() {
+      // 当用户传入prop时，向el-form传递form-item组件实例
       if (this.prop) {
         this.dispatch('ElForm', 'el.form.addField', [this]);
 
@@ -341,6 +342,7 @@
       }
     },
     beforeDestroy() {
+      // 销毁的时候向el-form发送销毁实例的事件
       this.dispatch('ElForm', 'el.form.removeField', [this]);
     }
   };
