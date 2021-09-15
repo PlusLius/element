@@ -201,8 +201,9 @@
       // el-form调用，或者form-item自身被用户调用validate，校验的触发方法
       validate(trigger, callback = noop) {
         this.validateDisabled = false;
-        // 拿到所有
+        // 根据对应用户传入的trigger拿到对应form-item上设置的Prop对应的rule中对应rule的trigger的rule
         const rules = this.getFilteredRule(trigger);
+        // 如果没有找到规则，校验直接通过
         if ((!rules || rules.length === 0) && this.required === undefined) {
           callback();
           return true;
@@ -211,23 +212,27 @@
         this.validateState = 'validating';
 
         const descriptor = {};
+        // 删除掉对应的trigger
         if (rules && rules.length > 0) {
           rules.forEach(rule => {
             delete rule.trigger;
           });
         }
+        // 在这form-item的prop中注册对应的rules
         descriptor[this.prop] = rules;
-
+        // 把这个规则传入validator进行校验
         const validator = new AsyncValidator(descriptor);
+        // 在model对象中注册form-item的prop对应form-item对应的该字段的值
         const model = {};
-
+         // 在model对象中注册form-item的prop对应form-item对应的该字段的值
         model[this.prop] = this.fieldValue;
-
+         // 使用校验器，校验model与descritor
         validator.validate(model, { firstFields: true }, (errors, invalidFields) => {
-          this.validateState = !errors ? 'success' : 'error';
-          this.validateMessage = errors ? errors[0].message : '';
-
+          this.validateState = !errors ? 'success' : 'error'; // errors不存在说明校验通过，否则就是校验失败
+          this.validateMessage = errors ? errors[0].message : ''; // errors存在拿到校验后的错误消息
+          // 将校验结果与无效字段传给回调
           callback(this.validateMessage, invalidFields);
+          // 调用el-form实例组件上的validate方法将form-item上的prop，校验结果，包装后的错误结果传递给el-form
           this.elForm && this.elForm.$emit('validate', this.prop, !errors, this.validateMessage || null);
         });
       },
@@ -278,16 +283,21 @@
         return [].concat(selfRules || formRules || []).concat(requiredRule);
       },
       getFilteredRule(trigger) {
+        // 拿到合并后的rules，包括了form-item上对应prop上的rules和自身设置的rules
         const rules = this.getRules();
-
+        // 对rules进行过滤
         return rules.filter(rule => {
+          // trigger没填的情况过滤出来
           if (!rule.trigger || trigger === '') return true;
+          // trigger如果是个数组
           if (Array.isArray(rule.trigger)) {
+            // 找到rule中对应trigger
             return rule.trigger.indexOf(trigger) > -1;
           } else {
+            // 找到对应trigger的规则
             return rule.trigger === trigger;
           }
-        }).map(rule => objectAssign({}, rule));
+        }).map(rule => objectAssign({}, rule)); // 将对应过滤的规则拷贝到一个新的对象中，返回一个新的list
       },
       onFieldBlur() {
         this.validate('blur');
