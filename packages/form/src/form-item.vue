@@ -127,16 +127,24 @@
         }
         return ret;
       },
+      // this.form时拿到el-form组件实例
       form() {
+        // 拿到form-item的父元素
         let parent = this.$parent;
+        // 拿到父元素的组件名
         let parentName = parent.$options.componentName;
+        // 找到el-form组件
         while (parentName !== 'ElForm') {
+          // 如果父元素是el-form-item，标记该el-form-item是被嵌套的el-form-item
           if (parentName === 'ElFormItem') {
             this.isNested = true;
           }
+          // 找到该父元素的父元素
           parent = parent.$parent;
+          // 找到该父元素的父元素
           parentName = parent.$options.componentName;
         }
+        // 返回el-form组件实例
         return parent;
       },
       fieldValue() {
@@ -186,9 +194,10 @@
       };
     },
     methods: {
-      // el-form调用，或者form-item自身被用户调用validate，校验的触发方法，以及
+      // el-form调用，或者form-item自身被用户调用validate，校验的触发方法
       validate(trigger, callback = noop) {
         this.validateDisabled = false;
+        // 拿到所有
         const rules = this.getFilteredRule(trigger);
         if ((!rules || rules.length === 0) && this.required === undefined) {
           callback();
@@ -251,6 +260,7 @@
         this.broadcast('ElTimeSelect', 'fieldReset', this.initialValue);
       },
       getRules() {
+        // 拿到el-form组件实例上的rules，也就是用户传入的rules
         let formRules = this.form.rules;
         const selfRules = this.rules;
         const requiredRule = this.required !== undefined ? { required: !!this.required } : [];
