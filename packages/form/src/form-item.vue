@@ -268,6 +268,7 @@
 
         this.broadcast('ElTimeSelect', 'fieldReset', this.initialValue);
       },
+      // 将form-item上的rules与form上的rules进行合并把是否必传的规则也进行合并
       getRules() {
         // 拿到el-form组件实例上的rules，也就是用户传入的rules
         let formRules = this.form.rules;
@@ -282,6 +283,7 @@
         // 最后将form-item上的rules与form上的rules进行合并把是否必传的规则也进行合并
         return [].concat(selfRules || formRules || []).concat(requiredRule);
       },
+      // 过滤出相应trigger的rule
       getFilteredRule(trigger) {
         // 拿到合并后的rules，包括了form-item上对应prop上的rules和自身设置的rules
         const rules = this.getRules();
@@ -299,29 +301,40 @@
           }
         }).map(rule => objectAssign({}, rule)); // 将对应过滤的规则拷贝到一个新的对象中，返回一个新的list
       },
+      // trigger为blur时的校验
       onFieldBlur() {
         this.validate('blur');
       },
+      // trigger为change时的校验
       onFieldChange() {
         if (this.validateDisabled) {
           this.validateDisabled = false;
           return;
         }
-
         this.validate('change');
       },
       updateComputedLabelWidth(width) {
         this.computedLabelWidth = width ? `${width}px` : '';
       },
       addValidateEvents() {
+        // 拿到rules
         const rules = this.getRules();
-
+        // required存在绑定事件
         if (rules.length || this.required !== undefined) {
+         // vm.$on('test', function (msg) {
+         //    console.log(msg)
+         //  })
+        //  vm.$emit('test', 'hi')
+        // => "hi"
+        // 监听form组件发送的事件
           this.$on('el.form.blur', this.onFieldBlur);
           this.$on('el.form.change', this.onFieldChange);
         }
       },
       removeValidateEvents() {
+        // vm.$off( [event, callback] )
+        // 移除自定义事件监听器。
+        // 如果没有提供参数，则移除所有的事件监听器；
         this.$off();
       }
     },
@@ -338,7 +351,7 @@
         Object.defineProperty(this, 'initialValue', {
           value: initialValue
         });
-
+        // 添加校验事件
         this.addValidateEvents();
       }
     },
