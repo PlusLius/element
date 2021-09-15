@@ -108,11 +108,12 @@
       },
       // 表单组件实例调用validate进行表单校验
       validate(callback) {
+        // 拿到从用户传入的Model
         if (!this.model) {
           console.warn('[Element Warn][Form]model is required for validate to work!');
           return;
         }
-
+        // 如果没有传入callback，就把callback改成返回promise
         let promise;
         // if no callback, return promise
         if (typeof callback !== 'function' && window.Promise) {
@@ -125,12 +126,16 @@
 
         let valid = true;
         let count = 0;
-        // 如果需要验证的fields为空，调用验证时立刻返回callback
+        // fields中保持的是form-item实例，如果没有说明没有form-item需要校验
         if (this.fields.length === 0 && callback) {
+          // 没有校验的item，直接返回给用户true
           callback(true);
         }
+        // 
         let invalidFields = {};
+        // 对每个form-item进行空值校验
         this.fields.forEach(field => {
+          // 调用form-item实例上的validate方法进行校验
           field.validate('', (message, field) => {
             if (message) {
               valid = false;
@@ -141,8 +146,9 @@
             }
           });
         });
-
+        // callback不存在时，将callback包装成promise进行返回
         if (promise) {
+          // 返回包装成promise的form表单组件实例
           return promise;
         }
       },
