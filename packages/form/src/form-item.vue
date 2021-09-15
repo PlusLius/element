@@ -62,12 +62,12 @@
     props: {
       label: String,
       labelWidth: String,
-      prop: String,
+      prop: String, // form-item 用户传入的prop 这个prop是用来取rules中查找对应规则的
       required: {
         type: Boolean,
         default: undefined
       },
-      rules: [Object, Array],
+      rules: [Object, Array], // form-item 用户传入的rules
       error: String,
       validateStatus: String,
       for: String,
@@ -262,9 +262,11 @@
       getRules() {
         // 拿到el-form组件实例上的rules，也就是用户传入的rules
         let formRules = this.form.rules;
+        // 用户传入的rules，也就是form-item自身的rules
         const selfRules = this.rules;
+        // 
         const requiredRule = this.required !== undefined ? { required: !!this.required } : [];
-
+        // 从form-item中传入的prop 取 rules中查找对应的rule
         const prop = getPropByPath(formRules, this.prop || '');
         formRules = formRules ? (prop.o[this.prop || ''] || prop.v) : [];
 
