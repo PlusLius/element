@@ -106,6 +106,7 @@
           field.clearValidate();
         });
       },
+      // 表单组件实例调用validate进行表单校验
       validate(callback) {
         if (!this.model) {
           console.warn('[Element Warn][Form]model is required for validate to work!');
