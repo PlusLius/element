@@ -137,11 +137,14 @@
         this.fields.forEach(field => {
           // 调用form-item实例上的validate方法进行校验
           field.validate('', (message, field) => {
+            // message如果等于空，校验失败
             if (message) {
               valid = false;
             }
+            // 将无效字段拷贝出来从，从field字段中拷贝出来
             invalidFields = objectAssign({}, invalidFields, field);
             if (typeof callback === 'function' && ++count === this.fields.length) {
+              // 将校验结果传递出去，以及无效的字段传递出去
               callback(valid, invalidFields);
             }
           });
