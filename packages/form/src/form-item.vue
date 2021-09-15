@@ -329,11 +329,12 @@
       // 当用户传入prop时，向el-form传递form-item组件实例
       if (this.prop) {
         this.dispatch('ElForm', 'el.form.addField', [this]);
-
+        // 根据el-form上传入的Model从form-item中的prop中去el-form的model中找到对应的数据值
         let initialValue = this.fieldValue;
         if (Array.isArray(initialValue)) {
           initialValue = [].concat(initialValue);
         }
+        // form-item.initialValue设置成响应式属性
         Object.defineProperty(this, 'initialValue', {
           value: initialValue
         });
