@@ -143,6 +143,7 @@
             }
             // 将无效字段拷贝出来从，从field字段中拷贝出来
             invalidFields = objectAssign({}, invalidFields, field);
+            // fields是form-item的个数，当count达到校验的个数时，调用回调将结果传递出去
             if (typeof callback === 'function' && ++count === this.fields.length) {
               // 将校验结果传递出去，以及无效的字段传递出去
               callback(valid, invalidFields);
