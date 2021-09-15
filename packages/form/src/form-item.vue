@@ -186,6 +186,7 @@
       };
     },
     methods: {
+      // el-form调用，或者form-item自身被用户调用validate，校验的触发方法，以及
       validate(trigger, callback = noop) {
         this.validateDisabled = false;
         const rules = this.getFilteredRule(trigger);
