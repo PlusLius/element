@@ -74,6 +74,7 @@
       };
     },
     created() {
+      // 通过$on动态注册方法，用于添加和异常form-item组件实例
       this.$on('el.form.addField', (field) => {
         if (field) {
           this.fields.push(field);
@@ -92,6 +93,7 @@
           console.warn('[Element Warn][Form]model is required for resetFields to work.');
           return;
         }
+        // 清空字段值，调用form-item组件自身的resetField
         this.fields.forEach(field => {
           field.resetField();
         });
@@ -156,15 +158,18 @@
           return promise;
         }
       },
+      // 校验某几个字段
       validateField(props, cb) {
         props = [].concat(props);
+        // 从form-item中查找对应的prop
         const fields = this.fields.filter(field => props.indexOf(field.prop) !== -1);
         if (!fields.length) {
           console.warn('[Element Warn]please pass correct props!');
           return;
         }
-
+        // 调用对应form-item对应的validate
         fields.forEach(field => {
+          // trigger:''， 将用户的cb传递给form-item validate
           field.validate('', cb);
         });
       },
