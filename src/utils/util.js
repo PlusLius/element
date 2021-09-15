@@ -46,15 +46,21 @@ export const getValueByPath = function(object, prop) {
 
 export function getPropByPath(obj, path, strict) {
   let tempObj = obj;
+  // 将path中的[]全部替换为.xxx -> [name] -> .name
   path = path.replace(/\[(\w+)\]/g, '.$1');
+  // 去掉第一个点
   path = path.replace(/^\./, '');
-
+  // 按点进行分割
   let keyArr = path.split('.');
   let i = 0;
+  // 当path只有1时不必循环
   for (let len = keyArr.length; i < len - 1; ++i) {
     if (!tempObj && !strict) break;
+    // 拿到path上的key
     let key = keyArr[i];
+    // 看看Path上的key在不在rules规则中
     if (key in tempObj) {
+      // 如果这个key在rules中，进入到这个规则对象的下一个层级
       tempObj = tempObj[key];
     } else {
       if (strict) {
@@ -64,9 +70,9 @@ export function getPropByPath(obj, path, strict) {
     }
   }
   return {
-    o: tempObj,
-    k: keyArr[i],
-    v: tempObj ? tempObj[keyArr[i]] : null
+    o: tempObj, // o就是Prop对象Path对应的那条规则对象，path为1时就只是拿到最外层obj对象
+    k: keyArr[i], // k就是path中最后一个路径
+    v: tempObj ? tempObj[keyArr[i]] : null // v就是obj[name] 中对应的那条规则
   };
 };
 
