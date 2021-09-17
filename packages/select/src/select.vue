@@ -3,7 +3,7 @@
     class="el-select"
     :class="[selectSize ? 'el-select--' + selectSize : '']"
     @click.stop="toggleMenu"
-    v-clickoutside="handleClose">
+    v-clickoutside="handleClose"> 点击范围外自动关闭
     <div
       class="el-select__tags"
       v-if="multiple"
@@ -137,9 +137,9 @@
   import Focus from 'element-ui/src/mixins/focus';
   import Locale from 'element-ui/src/mixins/locale';
   import ElInput from 'element-ui/packages/input';
-  import ElSelectMenu from './select-dropdown.vue';
+  import ElSelectMenu from './select-dropdown.vue'; // 下拉菜单
   import ElOption from './option.vue';
-  import ElTag from 'element-ui/packages/tag';
+  import ElTag from 'element-ui/packages/tag'; // 标签
   import ElScrollbar from 'element-ui/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
   import Clickoutside from 'element-ui/src/utils/clickoutside';
@@ -363,10 +363,12 @@
           this.dispatch('ElFormItem', 'el.form.change', val);
         }
       },
-
+      // visible 该值时关闭下拉框菜单
       visible(val) {
         if (!val) {
+          // 执行下拉框销毁操作
           this.broadcast('ElSelectDropdown', 'destroyPopper');
+          // 调用Input的blur
           if (this.$refs.input) {
             this.$refs.input.blur();
           }
@@ -399,9 +401,13 @@
             }
           }
         } else {
+          // 下拉菜单更新操作
           this.broadcast('ElSelectDropdown', 'updatePopper');
+          // 如果可搜索
           if (this.filterable) {
+            // 可搜索并且是远程
             this.query = this.remote ? '' : this.selectedLabel;
+            //  
             this.handleQueryChange(this.query);
             if (this.multiple) {
               this.$refs.input.focus();
@@ -418,6 +424,7 @@
             }
           }
         }
+        // 发送visible-change操作
         this.$emit('visible-change', val);
       },
 
@@ -599,7 +606,7 @@
       doDestroy() {
         this.$refs.popper && this.$refs.popper.doDestroy();
       },
-
+      // 关闭框
       handleClose() {
         this.visible = false;
       },
