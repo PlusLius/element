@@ -52,18 +52,18 @@
         @blur="softFocus = false"
         @keyup="managePlaceholder"
         @keydown="resetInputState"
-        @keydown.down.prevent="navigateOptions('next')"
-        @keydown.up.prevent="navigateOptions('prev')"
-        @keydown.enter.prevent="selectOption"
-        @keydown.esc.stop.prevent="visible = false"
-        @keydown.delete="deletePrevTag"
-        @keydown.tab="visible = false"
-        @compositionstart="handleComposition"
+        @keydown.down.prevent="navigateOptions('next')" // 键盘控制下拉菜单 
+        @keydown.up.prevent="navigateOptions('prev')" //  键盘控制下拉菜单 
+        @keydown.enter.prevent="selectOption" // 回车选择选中下拉菜单
+        @keydown.esc.stop.prevent="visible = false" // esc关闭下拉菜单
+        @keydown.delete="deletePrevTag" // delete删除标签
+        @keydown.tab="visible = false" // tab关闭下拉菜单
+        @compositionstart="handleComposition" 
         @compositionupdate="handleComposition"
         @compositionend="handleComposition"
         v-model="query"
-        @input="debouncedQueryChange"
-        v-if="filterable"
+        @input="debouncedQueryChange" // debouncedQueryChange
+        v-if="filterable" // 是否可搜索
         :style="{ 'flex-grow': '1', width: inputLength / (inputWidth - 32) + '%', 'max-width': inputWidth - 42 + 'px' }"
         ref="input">
     </div>
@@ -84,16 +84,25 @@
       @focus="handleFocus"
       @blur="handleBlur"
       @input="debouncedOnInputChange"
-      @keydown.native.down.stop.prevent="navigateOptions('next')"
+      // .stop .prevent .capture .self .once .passive 事件修饰符
+      // .stop <!-- 阻止单击事件继续传播 -->
+      // .prevent <!-- 提交事件不再重载页面 --> <form v-on:submit.prevent="onSubmit"></form>
+      // .enter .tab .delete (捕获“删除”和“退格”键) .esc .space .up .down .left .right按键修饰符
+      // 将原生事件绑定到组件
+      // 你可以使用 v-on 的 .native 修饰符
+      @keydown.native.down.stop.prevent="navigateOptions('next')" 
       @keydown.native.up.stop.prevent="navigateOptions('prev')"
       @keydown.native.enter.prevent="selectOption"
       @keydown.native.esc.stop.prevent="visible = false"
       @keydown.native.tab="visible = false"
+      // 鼠标移入，移出修改Hovering变量
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false">
+      // 前缀
       <template slot="prefix" v-if="$slots.prefix">
         <slot name="prefix"></slot>
       </template>
+      // 后缀
       <template slot="suffix">
         <i v-show="!showClose" :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"></i>
         <i v-if="showClose" class="el-select__caret el-input__icon el-icon-circle-close" @click="handleClearClick"></i>
@@ -103,10 +112,12 @@
       name="el-zoom-in-top"
       @before-enter="handleMenuEnter"
       @after-leave="doDestroy">
+      // pophover下拉菜单
       <el-select-menu
         ref="popper"
         :append-to-body="popperAppendToBody"
         v-show="visible && emptyText !== false">
+        // 给el-options包装el-scrollbr
         <el-scrollbar
           tag="ul"
           wrap-class="el-select-dropdown__wrap"
@@ -140,13 +151,13 @@
   import ElSelectMenu from './select-dropdown.vue'; // 下拉菜单
   import ElOption from './option.vue';
   import ElTag from 'element-ui/packages/tag'; // 标签
-  import ElScrollbar from 'element-ui/packages/scrollbar';
-  import debounce from 'throttle-debounce/debounce';
+  import ElScrollbar from 'element-ui/packages/scrollbar'; // scrollbar 内部的滚动组件
+  import debounce from 'throttle-debounce/debounce'; // 防抖
   import Clickoutside from 'element-ui/src/utils/clickoutside';
   import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
   import scrollIntoView from 'element-ui/src/utils/scroll-into-view';
   import { getValueByPath, valueEquals, isIE, isEdge } from 'element-ui/src/utils/util';
-  import NavigationMixin from './navigation-mixin';
+  import NavigationMixin from './navigation-mixin'; // 前进，后退方法混入
   import { isKorean } from 'element-ui/src/utils/shared';
 
   export default {
@@ -582,7 +593,7 @@
           this.softFocus = false;
         }
       },
-
+      // blur会关闭展示
       blur() {
         this.visible = false;
         this.$refs.reference.blur();
