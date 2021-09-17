@@ -15,7 +15,7 @@
 
     componentName: 'ElSelectDropdown',
 
-    mixins: [Popper],
+    mixins: [Popper], //混入Popper组件
 
     props: {
       placement: {
@@ -65,6 +65,7 @@
     mounted() {
       this.referenceElm = this.$parent.$refs.reference.$el;
       this.$parent.popperElm = this.popperElm = this.$el;
+      // 监听Popper更新，销毁事件
       this.$on('updatePopper', () => {
         if (this.$parent.visible) this.updatePopper();
       });
