@@ -6,6 +6,7 @@ export default {
   },
 
   computed: {
+    // 设置禁用
     optionsAllDisabled() {
       return this.options.filter(option => option.visible).every(option => option.disabled);
     }
