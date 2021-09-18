@@ -13,12 +13,12 @@ export default {
 
   props: {
     native: Boolean,
-    wrapStyle: {},
-    wrapClass: {},
-    viewClass: {},
-    viewStyle: {},
+    wrapStyle: {}, // 包裹层样式
+    wrapClass: {}, // 包裹层样式
+    viewClass: {}, // 视图层样式
+    viewStyle: {}, // 视图层样式
     noresize: Boolean, // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
-    tag: {
+    tag: { // 默认插槽使用的标签
       type: String,
       default: 'div'
     }
