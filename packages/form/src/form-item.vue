@@ -13,16 +13,17 @@
       :is-auto-width="labelStyle && labelStyle.width === 'auto'"
       :update-all="form.labelWidth === 'auto'">
       <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
-        <slot name="label">{{label + form.labelSuffix}}</slot>
+        <slot name="label">{{label + form.labelSuffix}}</slot> // label填充的地方
       </label>
     </label-wrap>
     <div class="el-form-item__content" :style="contentStyle">
-      <slot></slot>
+      <slot></slot> // el-form-item传入的标签插入到默认插槽
       <transition name="el-zoom-in-top">
         <slot
           v-if="validateState === 'error' && showMessage && form.showMessage"
           name="error"
           :error="validateMessage">
+          // 表单校验失败的时候填充失败信息
           <div
             class="el-form-item__error"
             :class="{
